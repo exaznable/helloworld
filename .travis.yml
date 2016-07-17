@@ -7,5 +7,23 @@ compiler:
 os:
   - linux
 
-script: make
+before_script:
+  - make clean
 
+script: if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then make ; fi
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "oLSzI8lxNBrA9OYNRuHOI03vu8r56w6nXUUYaebIEsnRkhmifghg26bCd9XcFx9krAvDem7I2pTvIU1uxiANXIG9/ddZwfRWJkF4DdCXNdI34Va8XV7HuOEx1HAuWJiO80+S9E8aQMkFyKLbJSVWpjCxQ6w/nKoCPUnJ1FYgTcJ8XxZvKuNy/AbZCXkfZtXsKRoIoByaIpypF0m3g7qtAp4W+Ij5IbZlYGLKOpfMZ8p/BHqHapJNkrnyrJHCzeuxbFk9JI1r0ZM2/PaORaqucT3Nto2G97Ko+38JAZ3kdEH7y+nch8fOxtt4ZGUaFPwIVDpXizzyuuRkQQrxG5SztNnYX5jW2vVWkCau/CTr779QCd2Obx2IcFHVkop+OSsT/XBuK3FdJze1EfFlE2kfP5TzP9inZO5rNct4E+t1TBawxPkrok8iaPmkWiaXhS3m/zlFcaxB0SprZNr1y7DkZQj52dmvdzve7rWu/kLTM3mcmeF/1jqRrR2VLE5FP5qy5K1b7kNwZzVX7XtvtPcSOkg/cIQsOnk1hQ8Xv5puEpudQyPPso3X/WD1Oi3zVDsl7lXWDfi+lmTFv9Idb7Qg7lZ2OB5aHE3Y1izlPNaZ0prxHGn73QiaKjFrnbfBw/t5LLttmaC+LtBXbgtpg4dNkqS2lLZDhlcw+ektSuGQJSU="
+
+addons:
+  coverity_scan:
+    project:
+      name: "exaznable/helloworld"
+      description: "Build submitted via Travis CI"
+    notification_email: me@example.com
+    build_command_prepend: "make clean"
+    build_command:   "make"
+    branch_pattern: coverity_scan
