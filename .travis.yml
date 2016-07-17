@@ -7,10 +7,7 @@ compiler:
 os:
   - linux
 
-before_script:
-  - make clean
-
-script: if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then make ; fi
+script: make
 
 env:
   global:
