@@ -55,9 +55,7 @@ install:
     fi
   
 script:
-  - mkdir build
-  - cd build
-  - pwd
+  - cd ${TRAVIS_BUILD_DIR} && mkdir build && cd build && pwd
   - cmake --version
   - cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && make
   
